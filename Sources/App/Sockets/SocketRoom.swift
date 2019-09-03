@@ -15,10 +15,6 @@ class SocketRoom<RoomID: Hashable, ConnectionID: Hashable>: Hashable {
     let id: RoomID
     var connections: Set<Connection>
     
-    var hashValue: Int {
-        return id.hashValue
-    }
-    
     init(id: RoomID, connection: Connection) {
         self.id = id
         self.connections = [connection]
@@ -46,5 +42,8 @@ class SocketRoom<RoomID: Hashable, ConnectionID: Hashable>: Hashable {
     static func == (lhs: SocketRoom<RoomID, ConnectionID>, rhs: SocketRoom<RoomID, ConnectionID>) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
-
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
