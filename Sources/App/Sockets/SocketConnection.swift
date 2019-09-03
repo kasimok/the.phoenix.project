@@ -19,9 +19,10 @@ class SocketConnection<RoomID: Hashable, ConnectionID: Hashable>: SocketHandler,
     weak var room: Room? 
     
     private let uniqueKey: UInt32
-    
-    var hashValue: Int {
-        return id.hashValue + uniqueKey.hashValue
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(uniqueKey)
     }
     
     init(id: ConnectionID, ws: WebSocket, conn: DatabaseConnectable) {
